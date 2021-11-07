@@ -1,0 +1,10 @@
+name: UHCPlugin
+main: io.github.darkknight8034.uhcplugin.Main
+author: DarkKnight8034
+version: 1.0
+api-version: 1.17
+description: Plugin for playing UHC
+commands:
+  relocate:
+    description: Spreads players randomly within given area
+    usage: /<command> <spread_distance>
