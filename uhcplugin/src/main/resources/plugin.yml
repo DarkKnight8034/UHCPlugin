@@ -6,5 +6,4 @@ api-version: 1.17
 description: Plugin for playing UHC
 commands:
   relocate:
-    description: Spreads players randomly within given area
-    usage: /<command> <spread_distance>
+    description: Spreads players randomly within given area around (0, 0)

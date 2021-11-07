@@ -31,17 +31,28 @@ public class Relocate implements CommandExecutor
     {
 
         Player player = (Player) sender;
-        player.sendMessage(args);
 
         World world = player.getWorld();
-        Integer range = Integer.parseInt(args[0]);
+        int range = 0;
+        try 
+        {
+
+            range = Integer.parseInt(args[0]);
+
+        }
+        catch (Exception e)
+        {
+
+            player.sendMessage("Make sure to enter a spread distance!");
+
+        }
 
         for (Player p : this.plugin.getServer().getOnlinePlayers())
         {
 
             double x = (double) random.nextInt(range);
             double z = (double) random.nextInt(range);
-            double y = (double) world.getHighestBlockYAt((int) x, (int) z);
+            double y = (double) (world.getHighestBlockYAt((int) x, (int) z) + 1);
 
             Location location = new Location(world, x, y, z);
             p.teleport(location);
