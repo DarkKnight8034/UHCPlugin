@@ -1,12 +1,18 @@
 package io.github.darkknight8034.uhcplugin.commands;
 
+// Command imports
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+// World imports
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
+
+// Potion imports
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.entity.LivingEntity;
 
 import io.github.darkknight8034.uhcplugin.Main;
 
@@ -38,6 +44,19 @@ public class End implements CommandExecutor
         this.plugin.relocate.relocate(world, 1);
 
         this.plugin.broadcast.send(ChatColor.GREEN + "The game has ended!");
+
+        // Removes any effects on the players
+        for (LivingEntity p : this.plugin.getServer().getOnlinePlayers())
+        {
+
+            for (PotionEffect effect : p.getActivePotionEffects())
+            {
+
+                p.removePotionEffect(effect.getType());
+
+            }
+
+        }
 
         return false;
 

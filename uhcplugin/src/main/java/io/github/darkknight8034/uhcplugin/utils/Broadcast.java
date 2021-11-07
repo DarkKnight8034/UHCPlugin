@@ -29,4 +29,16 @@ public class Broadcast
 
     }
 
+    public void title(String title, String subtitle, int fadein, int stay, int fadout)
+    {
+
+        for (Player p : this.plugin.getServer().getOnlinePlayers())
+        {
+
+            p.sendTitle(title, subtitle, fadein, stay, fadout);
+
+        }
+
+    }
+
 }
