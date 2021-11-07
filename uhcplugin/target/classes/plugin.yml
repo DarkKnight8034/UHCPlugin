@@ -7,3 +7,7 @@ description: Plugin for playing UHC
 commands:
   relocate:
     description: Spreads players randomly within given area around (0, 0)
+  start:
+    description: Relocates players, moves world border, and sets gamemode to hardcore. Starts the game.
+  end:
+    description: Brings players back to spawn, turns off harcore mode. Ends the game.

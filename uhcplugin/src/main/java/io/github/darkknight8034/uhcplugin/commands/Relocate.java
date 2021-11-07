@@ -31,8 +31,9 @@ public class Relocate implements CommandExecutor
     {
 
         Player player = (Player) sender;
-
         World world = player.getWorld();
+
+        // Gets range
         int range = 0;
         try 
         {
@@ -47,6 +48,17 @@ public class Relocate implements CommandExecutor
 
         }
 
+        // Relocates players
+        relocate(world, range);
+
+        return false;
+
+    }
+
+    // Relocates players within a range
+    public void relocate(World world, int range)
+    {
+
         for (Player p : this.plugin.getServer().getOnlinePlayers())
         {
 
@@ -60,8 +72,6 @@ public class Relocate implements CommandExecutor
 
 
         }
-
-        return false;
 
     }
 
