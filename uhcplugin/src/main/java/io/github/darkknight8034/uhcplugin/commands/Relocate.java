@@ -62,9 +62,9 @@ public class Relocate implements CommandExecutor
         for (Player p : this.plugin.getServer().getOnlinePlayers())
         {
 
-            double x = (double) random.nextInt(range);
-            double z = (double) random.nextInt(range);
-            double y = (double) (world.getHighestBlockYAt((int) x, (int) z) + 1);
+            int x = random.nextInt(range);
+            int z = random.nextInt(range);
+            int y = world.getHighestBlockYAt((int) x, (int) z) + 2;
 
             Location location = new Location(world, x, y, z);
             p.teleport(location);

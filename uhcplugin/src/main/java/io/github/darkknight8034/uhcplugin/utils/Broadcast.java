@@ -29,13 +29,13 @@ public class Broadcast
 
     }
 
-    public void title(String title, String subtitle, int fadein, int stay, int fadout)
+    public void title(String title, String subtitle, int fadein, int seconds, int fadout)
     {
 
         for (Player p : this.plugin.getServer().getOnlinePlayers())
         {
 
-            p.sendTitle(title, subtitle, fadein, stay, fadout);
+            p.sendTitle(title, subtitle, fadein, (int) seconds * 20, fadout);
 
         }
 

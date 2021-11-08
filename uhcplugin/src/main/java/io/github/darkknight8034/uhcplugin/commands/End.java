@@ -9,9 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
-
+import org.bukkit.GameMode;
 // Potion imports
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 
 import io.github.darkknight8034.uhcplugin.Main;
@@ -45,7 +46,7 @@ public class End implements CommandExecutor
 
         this.plugin.broadcast.send(ChatColor.GREEN + "The game has ended!");
 
-        // Removes any effects on the players
+        // Removes any effects on the players and sets to adventure mode
         for (LivingEntity p : this.plugin.getServer().getOnlinePlayers())
         {
 
@@ -55,6 +56,9 @@ public class End implements CommandExecutor
                 p.removePotionEffect(effect.getType());
 
             }
+
+            HumanEntity human = (HumanEntity) p;
+            human.setGameMode(GameMode.ADVENTURE);
 
         }
 
