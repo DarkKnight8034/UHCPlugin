@@ -47,7 +47,7 @@ public class End implements CommandExecutor
         else
         {
 
-            if (this.plugin.configFile.getString("lobby") == null)
+            if (this.plugin.configFile.getString("game.end.lobby") == null)
             {
 
                 world = this.plugin.getServer().getWorlds().get(0);
@@ -56,7 +56,7 @@ public class End implements CommandExecutor
             else
             {
 
-                world = this.plugin.getServer().getWorld(this.plugin.configFile.getString("lobby"));
+                world = this.plugin.getServer().getWorld(this.plugin.configFile.getString("game.end.lobby"));
                 if (world == null)
                 {
 

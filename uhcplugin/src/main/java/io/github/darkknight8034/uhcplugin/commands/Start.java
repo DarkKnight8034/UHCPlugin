@@ -31,7 +31,6 @@ public class Start implements CommandExecutor
 {
     
     private Main plugin;
-    private World gameWorld;
 
     public Start(Main plugin)
     {
@@ -45,9 +44,11 @@ public class Start implements CommandExecutor
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
 
+        this.plugin.alive = this.plugin.getServer().getOnlinePlayers().size();
+
         Player player = (Player) sender;
         World world;
-        if (this.gameWorld == null)
+        if (this.plugin.gameWorld == null)
         {
 
             if (!this.plugin.configFile.getBoolean("game.start.randomWorld"))
@@ -70,7 +71,7 @@ public class Start implements CommandExecutor
         else
         {
 
-            world = this.gameWorld;
+            world = this.plugin.gameWorld;
 
         }
 
@@ -92,7 +93,7 @@ public class Start implements CommandExecutor
 
 
         // Relocates players and creates world boarder
-        worldBorder(world, range + 50);
+        this.plugin.border.setBorder(range + 50, world);
         plugin.relocate.relocate(world, range);
 
 
@@ -123,6 +124,8 @@ public class Start implements CommandExecutor
 
             HumanEntity human = (HumanEntity) p;
             human.setGameMode(GameMode.SURVIVAL);
+            human.setFoodLevel(20);
+            human.setSaturation(5);
 
         }
 
@@ -139,26 +142,12 @@ public class Start implements CommandExecutor
     
     }
 
-    // Sets world border
-    public void worldBorder(World world, int distance)
-    {
-
-        WorldBorder border = world.getWorldBorder();
-        // Makes sure border is centered in world
-        border.setCenter(0, 0);
-
-        // Sets border
-        border.setSize(distance * 2);
-
-    }
-
-
     public void startWithSeed(long seed, Player sender, Command cmd, String label, String[] args)
     {
 
         WorldCreator creator = new WorldCreator("Game_World " + this.plugin.getServer().getWorlds().size());
         creator.seed(seed);
-        this.gameWorld = creator.createWorld();
+        this.plugin.gameWorld = creator.createWorld();
 
         onCommand(sender, cmd, label, args);
 

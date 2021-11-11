@@ -9,6 +9,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import io.github.darkknight8034.uhcplugin.Main;
@@ -34,21 +35,45 @@ public class EventListener implements Listener
 
         boolean thing = this.plugin.configFile.getBoolean("showKillCount");
         this.plugin.getLogger().info("Config showKillCount: " + thing);
-
-        // Gets players involved in death
+        
         Player player = event.getEntity();
-        LivingEntity entity = (LivingEntity) player;
-        Player killer = entity.getKiller();
-        World world = player.getWorld();
 
-        // Makes killed player a spectator
-        HumanEntity killed = (HumanEntity) player;
-        killed.setGameMode(GameMode.SPECTATOR);
+        try
+        {
 
-        // Lightning strick effect
-        world.strikeLightningEffect(player.getLocation());
+            // Gets players involved in death
+            LivingEntity entity = (LivingEntity) player;
+            Player killer = entity.getKiller();
+            World world = player.getWorld();
 
-        this.plugin.broadcast.send(killer.getDisplayName());
+            // Makes killed player a spectator
+            HumanEntity killed = (HumanEntity) player;
+            killed.setGameMode(GameMode.SPECTATOR);
+
+            // Lightning strick effect
+            world.strikeLightningEffect(player.getLocation());
+
+            this.plugin.broadcast.send(killer.getDisplayName());
+
+            Location location = new Location(this.plugin.gameWorld, 0, world.getHighestBlockYAt((int) 0, (int) 0), 0);
+            player.teleport(location);
+
+        }
+        catch (Error e)
+        {
+
+            // Player died to nature lol
+
+        }
+
+        this.plugin.alive -= 1;
+
+        if (this.plugin.alive == 1)
+        {
+
+            // End game
+
+        }
 
     }
 

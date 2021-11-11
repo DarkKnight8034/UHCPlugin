@@ -6,9 +6,12 @@ game:
     deleteWorld: true
   end:
     returnToLobby: true
-# Name of lobby world
-# Will go to first world if game.end.returnToLobby is true but no world name is provided
-lobby: 
+    # Name of lobby world
+    # Will go to first world if game.end.returnToLobby is true but no world name is provided
+    lobby: 
+  rules:
+    # In seconds, runs after player dies
+    borderShrinkTime: 60
 discord:
   eventPath:
-    
+  gameRecap: true

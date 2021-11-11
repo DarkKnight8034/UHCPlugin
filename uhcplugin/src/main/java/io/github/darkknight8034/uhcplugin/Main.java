@@ -6,9 +6,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.github.darkknight8034.uhcplugin.commands.Relocate;
 import io.github.darkknight8034.uhcplugin.commands.Start;
 import io.github.darkknight8034.uhcplugin.commands.End;
+
+// Utils
 import io.github.darkknight8034.uhcplugin.utils.Broadcast;
+import io.github.darkknight8034.uhcplugin.utils.Border;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.World;
 
 // Main plugin class
 public class Main extends JavaPlugin
@@ -21,6 +25,7 @@ public class Main extends JavaPlugin
 
     // Util classs
     public Broadcast broadcast;
+    public Border border;
 
     // Events
     public EventListener eventListener;
@@ -28,7 +33,11 @@ public class Main extends JavaPlugin
     // Config
     public FileConfiguration configFile;
 
+    // Game vars
     public long lastSeed;
+    public int alive;
+    public int borderSize;
+    public World gameWorld;
     
     @Override
     public void onEnable()
@@ -40,7 +49,10 @@ public class Main extends JavaPlugin
         this.relocate = new Relocate(this);
         this.start = new Start(this);
         this.end = new End(this);
+
         this.broadcast = new Broadcast(this);
+        this.border = new Border(this);
+
         this.eventListener = new EventListener(this);
 
 
