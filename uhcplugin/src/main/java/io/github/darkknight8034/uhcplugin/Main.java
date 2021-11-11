@@ -8,12 +8,7 @@ import io.github.darkknight8034.uhcplugin.commands.Start;
 import io.github.darkknight8034.uhcplugin.commands.End;
 import io.github.darkknight8034.uhcplugin.utils.Broadcast;
 
-// Config imports
-import java.io.File;
-import java.io.IOException;
-
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 // Main plugin class
 public class Main extends JavaPlugin

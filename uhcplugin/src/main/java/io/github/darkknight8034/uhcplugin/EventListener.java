@@ -11,9 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 
-// Join
-import org.bukkit.event.player.PlayerJoinEvent;
-
 import io.github.darkknight8034.uhcplugin.Main;
 
 public class EventListener implements Listener

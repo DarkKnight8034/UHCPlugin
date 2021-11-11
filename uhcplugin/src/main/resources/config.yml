@@ -9,3 +9,6 @@ game:
 # Name of lobby world
 # Will go to first world if game.end.returnToLobby is true but no world name is provided
 lobby: 
+discord:
+  eventPath:
+    
