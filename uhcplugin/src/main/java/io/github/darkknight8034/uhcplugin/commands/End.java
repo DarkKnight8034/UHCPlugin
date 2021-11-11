@@ -36,7 +36,37 @@ public class End implements CommandExecutor
     {
 
         Player player = (Player) sender;
-        World world = player.getWorld();
+        World world;
+
+        if (!this.plugin.configFile.getBoolean("game.end.returnToLobby"))
+        {
+
+            world = player.getWorld();
+
+        }
+        else
+        {
+
+            if (this.plugin.configFile.getString("lobby") == null)
+            {
+
+                world = this.plugin.getServer().getWorlds().get(0);
+
+            }
+            else
+            {
+
+                world = this.plugin.getServer().getWorld(this.plugin.configFile.getString("lobby"));
+                if (world == null)
+                {
+
+                    player.sendMessage(ChatColor.RED + "No world was found with the name: \"" + this.plugin.configFile.getString("lobby") + "\"! Could not send players back to lobby.");
+
+                }
+
+            }
+
+        }
 
         // Turns off hardcore
         world.setHardcore(false);

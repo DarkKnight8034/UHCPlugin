@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 // World imports
 import org.bukkit.WorldBorder;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 
 // UHC-like imports
 import org.bukkit.Difficulty;
@@ -31,6 +31,7 @@ public class Start implements CommandExecutor
 {
     
     private Main plugin;
+    private World gameWorld;
 
     public Start(Main plugin)
     {
@@ -45,7 +46,33 @@ public class Start implements CommandExecutor
     {
 
         Player player = (Player) sender;
-        World world = player.getWorld();
+        World world;
+        if (this.gameWorld == null)
+        {
+
+            if (!this.plugin.configFile.getBoolean("game.start.randomWorld"))
+            {
+
+                world = player.getWorld();
+
+            }
+            else
+            {
+
+                this.plugin.broadcast.title("Sending you to game world! Please wait.", "", 1, 5, 1);
+                WorldCreator creator = new WorldCreator("Game_World " + this.plugin.getServer().getWorlds().size());
+                world = creator.createWorld();
+                this.plugin.lastSeed = world.getSeed();
+
+            }
+
+        }
+        else
+        {
+
+            world = this.gameWorld;
+
+        }
 
 
         // Determines spread range
@@ -62,6 +89,11 @@ public class Start implements CommandExecutor
             player.sendMessage("Make sure to enter a spread distance!\nCommand is formatted: /<command> <spread_range>");
 
         }
+
+
+        // Relocates players and creates world boarder
+        worldBorder(world, range + 50);
+        plugin.relocate.relocate(world, range);
 
 
         int duration = 20 * 60; // Not because i can't do math, easier to change. ticks/sec * seconds
@@ -86,18 +118,13 @@ public class Start implements CommandExecutor
             // Heals player
             p.setHealth(20);
 
-            Location center = new Location(world, 0, world.getHighestBlockYAt(0, 0), 0);
-            world.playEffect(center, Effect.ENDERDRAGON_GROWL, 1);
+            // Says deprecated, i dont care
+            p.playEffect(p.getLocation(), Effect.ENDERDRAGON_GROWL, 1);
 
             HumanEntity human = (HumanEntity) p;
             human.setGameMode(GameMode.SURVIVAL);
 
         }
-
-
-        // Relocates players and creates world boarder
-        worldBorder(world, range + 50);
-        plugin.relocate.relocate(world, range);
 
 
         // Gives one life
@@ -122,6 +149,18 @@ public class Start implements CommandExecutor
 
         // Sets border
         border.setSize(distance * 2);
+
+    }
+
+
+    public void startWithSeed(long seed, Player sender, Command cmd, String label, String[] args)
+    {
+
+        WorldCreator creator = new WorldCreator("Game_World " + this.plugin.getServer().getWorlds().size());
+        creator.seed(seed);
+        this.gameWorld = creator.createWorld();
+
+        onCommand(sender, cmd, label, args);
 
     }
 

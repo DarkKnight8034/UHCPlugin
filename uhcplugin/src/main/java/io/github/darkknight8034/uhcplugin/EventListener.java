@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 
+// Join
+import org.bukkit.event.player.PlayerJoinEvent;
+
 import io.github.darkknight8034.uhcplugin.Main;
 
 public class EventListener implements Listener
@@ -22,6 +25,7 @@ public class EventListener implements Listener
     {
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.plugin = plugin;
 
     }
 
@@ -30,6 +34,9 @@ public class EventListener implements Listener
     @EventHandler
     public void onDeath(PlayerDeathEvent event)
     {
+
+        boolean thing = this.plugin.configFile.getBoolean("showKillCount");
+        this.plugin.getLogger().info("Config showKillCount: " + thing);
 
         // Gets players involved in death
         Player player = event.getEntity();
