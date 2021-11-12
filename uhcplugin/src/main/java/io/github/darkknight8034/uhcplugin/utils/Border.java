@@ -28,7 +28,7 @@ public class Border
 
         // Sets border
         border.setSize(distance * 2);
-        this.plugin.borderSize = distance *  2;
+        this.plugin.gameManager.borderSize = distance *  2;
 
     }
 

@@ -26,8 +26,7 @@ public class Recreate implements CommandExecutor
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
 
-        this.plugin.start.startWithSeed(this.plugin.lastSeed, (Player) sender, cmd, label, args);
-
+        this.plugin.gameManager.recreate((Player) sender);
         return false;
 
     }

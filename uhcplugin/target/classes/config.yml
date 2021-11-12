@@ -12,6 +12,7 @@ game:
   rules:
     # In seconds, runs after player dies
     borderShrinkTime: 60
+    healthTracker: true
 discord:
   eventPath:
   gameRecap: true

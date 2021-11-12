@@ -55,7 +55,7 @@ public class EventListener implements Listener
 
             this.plugin.broadcast.send(killer.getDisplayName());
 
-            Location location = new Location(this.plugin.gameWorld, 0, world.getHighestBlockYAt((int) 0, (int) 0), 0);
+            Location location = new Location(this.plugin.gameManager.gameWorld, 0, world.getHighestBlockYAt((int) 0, (int) 0), 0);
             player.teleport(location);
 
         }
@@ -66,9 +66,9 @@ public class EventListener implements Listener
 
         }
 
-        this.plugin.alive -= 1;
+        this.plugin.gameManager.alive -= 1;
 
-        if (this.plugin.alive == 1)
+        if (this.plugin.gameManager.alive == 1)
         {
 
             // End game

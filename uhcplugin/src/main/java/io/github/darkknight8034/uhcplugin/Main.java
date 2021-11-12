@@ -2,17 +2,18 @@ package io.github.darkknight8034.uhcplugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-// Other files
-import io.github.darkknight8034.uhcplugin.commands.Relocate;
 import io.github.darkknight8034.uhcplugin.commands.Start;
 import io.github.darkknight8034.uhcplugin.commands.End;
 
 // Utils
 import io.github.darkknight8034.uhcplugin.utils.Broadcast;
+import io.github.darkknight8034.uhcplugin.utils.Relocate;
 import io.github.darkknight8034.uhcplugin.utils.Border;
 
+// Managers
+import io.github.darkknight8034.uhcplugin.GameManager;
+
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.World;
 
 // Main plugin class
 public class Main extends JavaPlugin
@@ -27,17 +28,13 @@ public class Main extends JavaPlugin
     public Broadcast broadcast;
     public Border border;
 
+    public GameManager gameManager;
+
     // Events
     public EventListener eventListener;
 
     // Config
     public FileConfiguration configFile;
-
-    // Game vars
-    public long lastSeed;
-    public int alive;
-    public int borderSize;
-    public World gameWorld;
     
     @Override
     public void onEnable()
@@ -55,6 +52,7 @@ public class Main extends JavaPlugin
 
         this.eventListener = new EventListener(this);
 
+        this.gameManager = new GameManager(this);
 
         loadConfig();
 
