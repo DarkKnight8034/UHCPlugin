@@ -28,7 +28,9 @@ public class Main extends JavaPlugin
     public Broadcast broadcast;
     public Border border;
 
+    // Managers
     public GameManager gameManager;
+    public ScoreBoardManager sbManager;
 
     // Events
     public EventListener eventListener;
@@ -41,6 +43,7 @@ public class Main extends JavaPlugin
     {
 
         getLogger().info("UHC Plugin enabled!");
+        loadConfig();
 
         // Commands
         this.relocate = new Relocate(this);
@@ -53,8 +56,7 @@ public class Main extends JavaPlugin
         this.eventListener = new EventListener(this);
 
         this.gameManager = new GameManager(this);
-
-        loadConfig();
+        this.sbManager = new ScoreBoardManager(this);
 
     }
 

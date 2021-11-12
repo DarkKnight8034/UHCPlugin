@@ -9,10 +9,12 @@ game:
     # Name of lobby world
     # Will go to first world if game.end.returnToLobby is true but no world name is provided
     lobby: 
-  rules:
+  settings:
+    display:
+      healthDisplay: true
+      killCounter: true
     # In seconds, runs after player dies
     borderShrinkTime: 60
-    healthTracker: true
 discord:
   eventPath:
   gameRecap: true

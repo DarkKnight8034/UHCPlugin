@@ -9,5 +9,5 @@ commands:
     description: Relocates players, moves world border, and sets gamemode to hardcore. Starts the game.
   end:
     description: Brings players back to spawn, turns off harcore mode. Ends the game.
-  test:
-    description: testing
+  recreate:
+    description: Creates a new game with the same world as last time

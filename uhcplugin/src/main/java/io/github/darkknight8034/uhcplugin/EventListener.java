@@ -12,6 +12,9 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+// Scoreboard event
+import org.bukkit.event.player.PlayerJoinEvent;
+
 import io.github.darkknight8034.uhcplugin.Main;
 
 public class EventListener implements Listener
@@ -55,8 +58,7 @@ public class EventListener implements Listener
 
             this.plugin.broadcast.send(killer.getDisplayName());
 
-            Location location = new Location(this.plugin.gameManager.gameWorld, 0, world.getHighestBlockYAt((int) 0, (int) 0), 0);
-            player.teleport(location);
+            player.teleport(player.getLocation());
 
         }
         catch (Error e)
@@ -74,6 +76,14 @@ public class EventListener implements Listener
             // End game
 
         }
+
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event)
+    {
+
+        event.getPlayer().setScoreboard(this.plugin.sbManager.scoreboard);
 
     }
 

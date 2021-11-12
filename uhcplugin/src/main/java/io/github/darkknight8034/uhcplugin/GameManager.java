@@ -70,13 +70,11 @@ public class GameManager
 
         }
 
-        prepPlayers();
-
-
         // Relocates players and creates world boarder
         this.plugin.border.setBorder(range + 50, world);
         plugin.relocate.relocate(world, range);
 
+        prepPlayers();
 
         // Gives one life
         world.setDifficulty(Difficulty.HARD);
@@ -84,6 +82,53 @@ public class GameManager
 
         // Msgs that game has started
         this.plugin.broadcast.title(ChatColor.RED + "The game has started!", "Good luck!", 1, 3, 1);
+
+    }
+
+    public void end(Player player)
+    {
+
+        World world;
+
+        if (!this.plugin.configFile.getBoolean("game.end.returnToLobby"))
+        {
+
+            world = player.getWorld();
+
+        }
+        else
+        {
+
+            if (this.plugin.configFile.getString("game.end.lobby") == null)
+            {
+
+                world = this.plugin.getServer().getWorlds().get(0);
+
+            }
+            else
+            {
+
+                world = this.plugin.getServer().getWorld(this.plugin.configFile.getString("game.end.lobby"));
+                if (world == null)
+                {
+
+                    player.sendMessage(ChatColor.RED + "No world was found with the name: \"" + this.plugin.configFile.getString("lobby") + "\"! Could not send players back to lobby.");
+
+                }
+
+            }
+
+        }
+
+        // Turns off hardcore
+        world.setHardcore(false);
+
+        // Brings players back to spawn
+        this.plugin.relocate.relocate(world, 1);
+
+        this.plugin.broadcast.send(ChatColor.GREEN + "The game has ended!");
+
+        resetPlayers();
 
     }
 
@@ -119,6 +164,27 @@ public class GameManager
             human.setGameMode(GameMode.SURVIVAL);
             human.setFoodLevel(20);
             human.setSaturation(5);
+
+        }
+
+    }
+
+    private void resetPlayers()
+    {
+
+        // Removes any effects on the players and sets to adventure mode
+        for (LivingEntity p : this.plugin.getServer().getOnlinePlayers())
+        {
+
+            for (PotionEffect effect : p.getActivePotionEffects())
+            {
+
+                p.removePotionEffect(effect.getType());
+
+            }
+
+            HumanEntity human = (HumanEntity) p;
+            human.setGameMode(GameMode.ADVENTURE);
 
         }
 

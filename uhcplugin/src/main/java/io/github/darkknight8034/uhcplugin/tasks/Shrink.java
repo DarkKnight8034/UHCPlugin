@@ -18,7 +18,7 @@ public class Shrink extends BukkitRunnable
     {
 
         this.plugin = plugin;
-        this.seconds = plugin.configFile.getInt("game.rules.borderShrinkTime");
+        this.seconds = plugin.configFile.getInt("game.settings.borderShrinkTime");
         this.incrememtal = incrememtal;
         this.world = world;
 
