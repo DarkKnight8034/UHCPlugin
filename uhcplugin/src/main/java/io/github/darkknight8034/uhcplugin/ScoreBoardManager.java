@@ -7,6 +7,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import org.bukkit.command.Command;
+
 import io.github.darkknight8034.uhcplugin.Main;
 
 public class ScoreBoardManager
@@ -26,22 +28,20 @@ public class ScoreBoardManager
         if (this.plugin.configFile.getBoolean("game.settings.display.healthDisplay"))
         {
 
-            this.scoreboard = this.manager.getNewScoreboard();
-            Objective objective = this.scoreboard.registerNewObjective("health", "health", "Health");
-            objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+            this.plugin.broadcast.command("scoreboard objectives add Hearts health");
+            this.plugin.broadcast.command("scoreboard objectives setdisplay belowName Hearts");
 
         }
 
         if (this.plugin.configFile.getBoolean("game.settings.display.killCounter"))
         {
 
-            this.scoreboard = this.manager.getNewScoreboard();
-            Objective objective = this.scoreboard.registerNewObjective("kills", "playerKillCount", ChatColor.RED + "Player Kills");
-            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
+            this.plugin.broadcast.command("scoreboard objectives add Kills playerKillCount " + ChatColor.RED + "Player Kills");
+            this.plugin.broadcast.command("scoreboard objectives setdisplay sidebar Kills");
+            
         }   
 
-        addPlayers(this.scoreboard);
+        // addPlayers(this.scoreboard);
 
     }
 

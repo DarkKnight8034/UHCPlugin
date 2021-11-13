@@ -41,4 +41,11 @@ public class Broadcast
 
     }
 
+    public void command(String command)
+    {
+
+        this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command);
+
+    }
+
 }
