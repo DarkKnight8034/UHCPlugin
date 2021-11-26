@@ -79,7 +79,13 @@ public class ConnectionManager
         if (killer != null)
         {
 
-            map.put("killer", killer);
+            map.put("killer", killer.getDisplayName());
+
+        }
+        else
+        {
+
+            map.put("killer", "Natural Causes");
 
         }
 
