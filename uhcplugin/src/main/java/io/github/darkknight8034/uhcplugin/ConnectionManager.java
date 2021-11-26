@@ -23,13 +23,14 @@ public class ConnectionManager
 
     }
 
-    public void sendEvent(Event event)
+    public boolean sendEvent(Event event)
     {
 
-        HashMap map;
-        boolean allowed;
+        HashMap map = new HashMap<String, Object>();
+        boolean allowed = true;
         FileWriter file;
 
+        // Creates file writer
         try
         {
 
@@ -40,18 +41,21 @@ public class ConnectionManager
         {
          
             this.plugin.getLogger().info("ERROR! There was a problem opening the file: " + plugin.configFile.getString("discord.eventPath"));
+            return false;
 
         }
 
         
+        // Gets event data
         if (event.getClass().isInstance(PlayerDeathEvent.class))
         {
 
-            map = kill((PlayerDeathEvent) event);
+            map = deathEvent((PlayerDeathEvent) event);
             allowed = this.plugin.configFile.getBoolean("discord.events.playerDeathEvent");
 
         }
 
+        // Sends event data
         try
         {
 
@@ -66,13 +70,16 @@ public class ConnectionManager
         catch(IOException e) 
         {
 
-            this.plugin.getLogger().info("There was an error writing to the file: " + this.plugin.configFile.getString("discord.eventPath"))
+            this.plugin.getLogger().info("There was an error writing to the file: " + this.plugin.configFile.getString("discord.eventPath"));
 
         }
 
+        return true;
+
     }
 
-    private HashMap<String, Object> kill(PlayerDeathEvent event)
+    // Converts PlayerDeathEvent into hashmap for json
+    private HashMap<String, Object> deathEvent(PlayerDeathEvent event)
     {
 
         HashMap map = new HashMap<String, Object>();
