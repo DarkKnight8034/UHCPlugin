@@ -11,22 +11,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-
-
 public class ConnectionManager
 {
 
-    private FileWriter file;
     private Main plugin;
 
     public ConnectionManager(Main plugin)
     {
 
         this.plugin = plugin;
+
+    }
+
+    public void sendEvent(Event event)
+    {
+
+        HashMap map;
+        boolean allowed;
+        FileWriter file;
+
         try
         {
 
-            this.file = new FileWriter((String) plugin.configFile.get("discord.eventPath"));
+            file = new FileWriter((String) plugin.configFile.get("discord.eventPath"));
 
         }
         catch (IOException e)
@@ -36,24 +43,24 @@ public class ConnectionManager
 
         }
 
-    }
-
-    public void sendEvent(Event event)
-    {
-
-        HashMap map;
-
+        
         if (event.getClass().isInstance(PlayerDeathEvent.class))
         {
 
             map = kill((PlayerDeathEvent) event);
+            allowed = this.plugin.configFile.getBoolean("discord.events.playerDeathEvent");
 
         }
 
         try
         {
 
-            this.file.write(map.toString());
+            if (allowed)
+            {
+                
+                file.write(map.toString());
+
+            }
 
         }
         catch(IOException e) 

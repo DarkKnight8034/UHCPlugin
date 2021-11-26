@@ -17,4 +17,6 @@ game:
     borderShrinkTime: 60
 discord:
   eventPath:
-  gameRecap: true
+  events:
+    playerDeathEvent: true
+    gameRecap: true

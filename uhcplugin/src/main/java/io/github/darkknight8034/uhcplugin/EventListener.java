@@ -77,6 +77,9 @@ public class EventListener implements Listener
 
         }
 
+        // Connection handler
+        this.plugin.connManager.sendEvent(event);
+
     }
 
     @EventHandler

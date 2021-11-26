@@ -12,6 +12,7 @@ import io.github.darkknight8034.uhcplugin.utils.Border;
 
 // Managers
 import io.github.darkknight8034.uhcplugin.GameManager;
+import io.github.darkknight8034.uhcplugin.ConnectionManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin
     // Managers
     public GameManager gameManager;
     public ScoreBoardManager sbManager;
+    public ConnectionManager connManager;
 
     // Events
     public EventListener eventListener;
@@ -57,6 +59,7 @@ public class Main extends JavaPlugin
 
         this.gameManager = new GameManager(this);
         this.sbManager = new ScoreBoardManager(this);
+        this.connManager = new ConnectionManager(this);
 
     }
 
