@@ -1,6 +1,8 @@
 package io.github.darkknight8034.uhcplugin;
 
 import io.github.darkknight8034.uhcplugin.Main;
+import io.github.darkknight8034.uhcplugin.events.GameRecap;
+import io.github.darkknight8034.uhcplugin.events.StartGame;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -26,7 +28,7 @@ public class ConnectionManager
     public boolean sendEvent(Event event)
     {
 
-        HashMap map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         boolean allowed = true;
         FileWriter file;
 
@@ -54,6 +56,20 @@ public class ConnectionManager
             allowed = this.plugin.configFile.getBoolean("discord.events.playerDeathEvent");
 
         }
+        else if (event.getClass().isInstance(GameRecap.class))
+        {
+
+            map = gameRecap((GameRecap) event);
+            allowed = this.plugin.configFile.getBoolean("discord.event.gameRecap");
+
+        }
+        else if (event.getClass().isInstance(StartGame.class))
+        {
+
+            map = startGame((StartGame) event);
+            allowed = true; // Discord bot needs this, always allowed
+
+        }
 
         // Sends event data
         try
@@ -63,6 +79,7 @@ public class ConnectionManager
             {
                 
                 file.write(map.toString());
+                file.close();
 
             }
 
@@ -82,11 +99,11 @@ public class ConnectionManager
     private HashMap<String, Object> deathEvent(PlayerDeathEvent event)
     {
 
-        HashMap map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         Player player = event.getEntity();
 
         map.put("event", "PlayerDeathEvent");
-        map.put("killed", player.getUniqueId());
+        map.put("killed", player.getDisplayName());
 
         // Can return null for killer if player died of natural causes
         Player killer = ((LivingEntity) player).getKiller();
@@ -104,6 +121,30 @@ public class ConnectionManager
         }
 
         map.put("message", event.getDeathMessage());
+
+        return map;
+
+    }
+
+    // Converts GameRecap into hashmap for json
+    private HashMap<String, Object> gameRecap(GameRecap event)
+    {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("event", "GameRecap");
+        map.put("kills", event.kills);
+        map.put("podium", event.podium);
+
+        return map;
+
+    }
+
+    // Converts StartGame into hashmap for json
+    private HashMap<String, Object> startGame(StartGame event)
+    {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("event", "startGame");
 
         return map;
 

@@ -15,7 +15,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.Effect;
 
+import java.util.HashMap;
+import java.util.ArrayList;
+
 import io.github.darkknight8034.uhcplugin.Main;
+import io.github.darkknight8034.uhcplugin.events.StartGame;
+import io.github.darkknight8034.uhcplugin.events.GameRecap;
 
 public class GameManager
 {
@@ -28,20 +33,34 @@ public class GameManager
 
     // Current game
     public int alive;
+    public HashMap<String, Boolean> perPlayer;
     public int borderSize;
     public World gameWorld;
+
+    // Recap
+    public HashMap<String, Integer> kills;
+    public ArrayList<String> position;
     
     public GameManager(Main plugin)
     {
 
         this.plugin = plugin;
+        this.kills = new HashMap<String, Integer>();
+
+        for (Player p : this.plugin.getServer().getOnlinePlayers())
+        {
+
+            this.kills.put(p.getDisplayName(), 0);
+
+        }
 
     }
 
     public void start(Player player, int range, long seed)
     {
 
-        this.alive = this.plugin.getServer().getOnlinePlayers().size();
+        resetCache();
+        this.plugin.connManager.sendEvent(new StartGame());
 
         World world;
         if (this.gameWorld == null)
@@ -141,6 +160,8 @@ public class GameManager
         for (Player p : this.plugin.getServer().getOnlinePlayers())
         {
 
+            perPlayer.put(p.getDisplayName(), true);
+
             // Removes any effects
             for (PotionEffect effect : p.getActivePotionEffects())
             {
@@ -190,6 +211,20 @@ public class GameManager
 
     }
 
+    private void resetCache()
+    {
+
+        for (String player : this.kills.keySet())
+        {
+
+            this.kills.put(player, 0);
+
+        }
+
+        this.alive = this.plugin.getServer().getOnlinePlayers().size();
+
+    }
+
     private World createWorld(String name, long seed)
     {
 
@@ -211,6 +246,55 @@ public class GameManager
     {
 
         start(player, this.range, lastSeed);
+
+    }
+
+    public void add_kill(String killer, String killed)
+    {
+
+        if (killer == "%%natural%%")
+        {
+
+            this.alive -= 1;
+        
+        }
+        else
+        {
+
+            this.alive -= 1;
+            this.kills.put(killer, this.kills.get(killer) + 1);
+
+        }
+
+        this.perPlayer.put(killed, false);
+
+        if (this.alive < 3)
+        {
+
+            // Adds killed position if they in the last 3
+            position.add(0, killed);
+
+            // If only one left, end game and add them as the winner
+            if (this.alive == 1)
+            {
+
+                for (String k: this.perPlayer.keySet())
+                {
+
+                    if (this.perPlayer.get(k))
+                    {
+
+                        position.add(0, k);
+
+                        this.plugin.connManager.sendEvent(new GameRecap(this.kills, this.position));
+                        
+                    }
+
+                }
+
+            }
+
+        } 
 
     }
 

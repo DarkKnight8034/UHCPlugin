@@ -9,7 +9,6 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.World;
 
 // Scoreboard event
@@ -49,6 +48,8 @@ public class EventListener implements Listener
             Player killer = entity.getKiller();
             World world = player.getWorld();
 
+            this.plugin.gameManager.add_kill(killer.getDisplayName(), player.getDisplayName());
+
             // Makes killed player a spectator
             HumanEntity killed = (HumanEntity) player;
             killed.setGameMode(GameMode.SPECTATOR);
@@ -65,23 +66,16 @@ public class EventListener implements Listener
         {
 
             // Player died to nature lol
+            this.plugin.gameManager.add_kill("%%natural%%", player.getDisplayName());
 
         }
 
-        this.plugin.gameManager.alive -= 1;
-
-        if (this.plugin.gameManager.alive == 1)
-        {
-
-            // End game
-
-        }
-
-        // Connection handler
+        // Sends the player death event to the connection manager
         this.plugin.connManager.sendEvent(event);
 
     }
 
+    
     @EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
