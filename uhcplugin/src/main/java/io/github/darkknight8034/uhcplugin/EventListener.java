@@ -67,7 +67,7 @@ public class EventListener implements Listener
 
             // Player died to nature lol
             this.plugin.gameManager.add_kill("%%natural%%", player.getDisplayName());
-
+            
         }
 
         // Sends the player death event to the connection manager

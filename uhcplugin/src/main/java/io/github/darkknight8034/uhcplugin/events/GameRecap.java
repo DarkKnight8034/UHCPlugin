@@ -6,8 +6,6 @@ import java.util.HashMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import io.github.darkknight8034.uhcplugin.Main;
-
 public class GameRecap extends Event
 {
     
