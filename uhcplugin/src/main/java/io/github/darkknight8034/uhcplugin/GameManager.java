@@ -287,6 +287,9 @@ public class GameManager
                         position.add(0, k);
 
                         this.plugin.connManager.sendEvent(new GameRecap(this.kills, this.position));
+
+                        this.plugin.broadcast.title("Game has ended!", "Congradulations: " + k, 1, 3, 1);
+                        this.plugin.broadcast.send("The top three are: " + position);
                         
                     }
 
