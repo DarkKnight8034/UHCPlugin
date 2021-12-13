@@ -2,7 +2,7 @@ name: UHCPlugin
 main: io.github.darkknight8034.uhcplugin.Main
 author: DarkKnight8034
 version: 1.0
-api-version: 1.17
+api-version: 1.18
 description: Plugin for playing UHC
 commands:
   start:
